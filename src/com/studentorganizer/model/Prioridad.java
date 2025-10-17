@@ -2,7 +2,9 @@ package com.studentorganizer.model;
 
 public enum Prioridad {
 	ALTA("Alta"),
+	
     MEDIA("Media"),
+	
     BAJA("Baja");
     
     private final String displayName;
@@ -15,5 +17,4 @@ public enum Prioridad {
     public String toString() {
         return displayName;
     }
-
 }

@@ -16,7 +16,7 @@ public class SesionEstudio {
         this.activa = false;
     }
     
-    // Métodos de negocio
+    // Métodos
     public void iniciar() {
         this.horaInicio = LocalDateTime.now();
         this.activa = true;
@@ -31,20 +31,40 @@ public class SesionEstudio {
         return java.time.Duration.between(horaInicio, LocalDateTime.now()).toMinutes();
     }
     
-    // Getters y Setters
-    public Tarea getTareaAsociada() { return tareaAsociada; }
-    public void setTareaAsociada(Tarea tareaAsociada) { this.tareaAsociada = tareaAsociada; }
+    // Getteres y Setteres
+    public Tarea getTareaAsociada() { 
+		return tareaAsociada; }
+	
+    public void setTareaAsociada(Tarea tareaAsociada) { 
+		this.tareaAsociada = tareaAsociada;
+	}
     
-    public LocalDateTime getHoraInicio() { return horaInicio; }
-    public void setHoraInicio(LocalDateTime horaInicio) { this.horaInicio = horaInicio; }
+    public LocalDateTime getHoraInicio() { 
+		return horaInicio;
+	}
+    public void setHoraInicio(LocalDateTime horaInicio) { 
+		this.horaInicio = horaInicio; 
+	}
     
-    public int getDuracionMinutos() { return duracionMinutos; }
-    public void setDuracionMinutos(int duracionMinutos) { this.duracionMinutos = duracionMinutos; }
+    public int getDuracionMinutos() { 
+		return duracionMinutos; 
+	}
+    public void setDuracionMinutos(int duracionMinutos) { 
+		this.duracionMinutos = duracionMinutos; 
+	}
     
-    public TecnicaEstudio getTecnica() { return tecnica; }
-    public void setTecnica(TecnicaEstudio tecnica) { this.tecnica = tecnica; }
+    public TecnicaEstudio getTecnica() { 
+		return tecnica;
+	}
+    public void setTecnica(TecnicaEstudio tecnica) { 
+		this.tecnica = tecnica;
+	}
     
-    public boolean isActiva() { return activa; }
-    public void setActiva(boolean activa) { this.activa = activa; }
+    public boolean isActiva() {
+		return activa; 
+	}
+    public void setActiva(boolean activa) { 
+		this.activa = activa;
+	}
 
 }

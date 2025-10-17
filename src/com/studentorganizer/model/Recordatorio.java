@@ -24,16 +24,32 @@ public class Recordatorio {
 	    }
 	    
 	    // Getters y Setters
-	    public String getMensaje() { return mensaje; }
-	    public void setMensaje(String mensaje) { this.mensaje = mensaje; }
+	    public String getMensaje() { 
+			return mensaje; 
+		}
+	    public void setMensaje(String mensaje) { 
+			this.mensaje = mensaje; 
+		}
 	    
-	    public LocalDateTime getFechaHora() { return fechaHora; }
-	    public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
+	    public LocalDateTime getFechaHora() { 
+			return fechaHora; 
+		}
+	    public void setFechaHora(LocalDateTime fechaHora) {
+			this.fechaHora = fechaHora;
+		}
 	    
-	    public Tarea getTareaAsociada() { return tareaAsociada; }
-	    public void setTareaAsociada(Tarea tareaAsociada) { this.tareaAsociada = tareaAsociada; }
+	    public Tarea getTareaAsociada() { 
+			return tareaAsociada;
+		}
+	    public void setTareaAsociada(Tarea tareaAsociada) {
+			this.tareaAsociada = tareaAsociada;
+		}
 	    
-	    public boolean isActivo() { return activo; }
-	    public void setActivo(boolean activo) { this.activo = activo; }
+	    public boolean isActivo() { 
+			return activo;
+		}
+	    public void setActivo(boolean activo) {
+			this.activo = activo; 
+		}
 
 }

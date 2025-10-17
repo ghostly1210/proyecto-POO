@@ -20,11 +20,19 @@ public class Curso {
     }
     
     // Getters y Setters
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getNombre() { 
+		return nombre; 
+	}
+    public void setNombre(String nombre) { 
+		this.nombre = nombre; 
+	}
     
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getDescripcion() { 
+		return descripcion; 
+	}
+    public void setDescripcion(String descripcion) { 
+		this.descripcion = descripcion; 
+	}
     
     public Color getColor() { 
     	if (color == null) {
@@ -32,7 +40,9 @@ public class Curso {
     	}
     	return color; 
     }
-    public void setColor(Color color) { this.color = color; }
+    public void setColor(Color color) { 
+		this.color = color; 
+	}
     
     @Override
     public String toString() {

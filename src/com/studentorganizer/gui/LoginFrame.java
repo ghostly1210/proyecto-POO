@@ -2,6 +2,7 @@ package com.studentorganizer.gui;
 
 import com.studentorganizer.model.Estudiante;
 import com.studentorganizer.service.EstudianteService;
+import com.studentorganizer.service.CursosService;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,9 +19,11 @@ public class LoginFrame extends JFrame {
     private JPanel cardPanel;
     private CardLayout cardLayout;
     private EstudianteService estudianteService;
+    private CursosService cursosService;
     
     public LoginFrame() {
         estudianteService = new EstudianteService();
+        cursosService = new CursosService();
         initializeComponents();
         setupUI();
         setupEventListeners();
@@ -192,7 +195,7 @@ public class LoginFrame extends JFrame {
                 
                 Estudiante estudiante = estudianteService.autenticarEstudiante(email, password);
                 if (estudiante != null) {
-                    new MainFrame(estudiante, estudianteService).setVisible(true);
+                    new MainFrame(estudiante, estudianteService, cursosService).setVisible(true);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(LoginFrame.this, 

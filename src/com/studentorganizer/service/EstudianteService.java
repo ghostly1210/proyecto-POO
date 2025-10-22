@@ -1,16 +1,18 @@
 package com.studentorganizer.service;
 
+import com.google.gson.reflect.TypeToken;
 import com.studentorganizer.model.Estudiante;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EstudianteService {
     private List<Estudiante> estudiantes;
-    private PersistenceService persistenceService;
+    private PersistenceService<Estudiante> persistenceService;
     private static final String DATA_FILE = "estudiantes.json"; //Nombre del archivo de guardado
     
     public EstudianteService() {
-    	this.persistenceService = new PersistenceService(DATA_FILE);
-    	this.estudiantes = persistenceService.loadEstudiantes();
+    	this.persistenceService = new PersistenceService<>(DATA_FILE);
+    	this.estudiantes = persistenceService.loadData(new TypeToken<ArrayList<Estudiante>>() {});
     }
     
     public Estudiante autenticarEstudiante(String email, String password) {
@@ -40,6 +42,6 @@ public class EstudianteService {
      * Se debe llamar cada vez que se haga un cambio importante que deba persistir.
      */
     public void saveAllData() {
-    	persistenceService.saveEstudiantes(estudiantes);
+    	persistenceService.saveData(estudiantes);
     }
 }

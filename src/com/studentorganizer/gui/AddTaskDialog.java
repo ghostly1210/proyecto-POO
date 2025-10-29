@@ -2,6 +2,7 @@ package com.studentorganizer.gui;
 
 import com.studentorganizer.model.*;
 import com.studentorganizer.service.TareaService;
+import com.studentorganizer.service.CursosService;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -17,10 +18,12 @@ public class AddTaskDialog extends JDialog {
     private JComboBox<Curso> courseCombo;
     private boolean taskCreated = false;
     private Estudiante estudiante;
+    private CursosService cursosService;
     
-    public AddTaskDialog(Frame parent, Estudiante estudiante) {
+    public AddTaskDialog(Frame parent, Estudiante estudiante, CursosService cursosService) {
         super(parent, "Nueva Tarea", true);
         this.estudiante = estudiante;
+        this.cursosService = cursosService;
         
         initializeComponents();
         setupUI();
@@ -39,7 +42,7 @@ public class AddTaskDialog extends JDialog {
         priorityCombo = new JComboBox<>(Prioridad.values());
         
         // Crear algunos cursos por defecto si no existen
-        List<Curso> cursos = new ArrayList<>();
+        List<Curso> cursos = cursosService.getListaDeCursos();
         cursos.add(new Curso("Matemáticas", "Curso de matemáticas"));
         cursos.add(new Curso("Programación", "Curso de programación"));
         cursos.add(new Curso("Historia", "Curso de historia"));

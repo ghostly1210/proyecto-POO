@@ -1,6 +1,7 @@
 package com.studentorganizer.gui;
 
 import com.studentorganizer.model.Curso;
+import com.studentorganizer.service.CursosService;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,9 +10,11 @@ import java.util.List;
 public class CoursesDialog extends JDialog {
     private DefaultListModel<Curso> coursesModel;
     private JList<Curso> coursesList;
+    private CursosService cursosService;
     
-    public CoursesDialog(Frame parent) {
+    public CoursesDialog(Frame parent, CursosService cursosService) {
         super(parent, "Gestionar Cursos", true);
+        this.cursosService = cursosService;
         
         initializeComponents();
         setupUI();
@@ -66,8 +69,8 @@ public class CoursesDialog extends JDialog {
             String name = JOptionPane.showInputDialog(this, "Nombre del curso:");
             if (name != null && !name.trim().isEmpty()) {
                 String description = JOptionPane.showInputDialog(this, "Descripción del curso:");
-                Curso newCourse = new Curso(name.trim(), description != null ? description.trim() : "");
-                coursesModel.addElement(newCourse);
+                cursosService.agregarCurso(name.trim(), description != null ? description.trim() : "");
+                loadCourses();
             }
         });
         
@@ -78,17 +81,19 @@ public class CoursesDialog extends JDialog {
                     "¿Eliminar el curso '" + selected.getNombre() + "'?",
                     "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
-                    coursesModel.removeElement(selected);
+                    cursosService.eliminarCurso(selected);
+                    loadCourses();
                 }
             }
         });
     }
     
     private void loadCourses() {
-        // Cargar algunos cursos por defecto
-        coursesModel.addElement(new Curso("Matemáticas", "Curso de matemáticas"));
-        coursesModel.addElement(new Curso("Programación", "Curso de programación"));
-        coursesModel.addElement(new Curso("Historia", "Curso de historia"));
-        coursesModel.addElement(new Curso("Ciencias", "Curso de ciencias"));
+        // Carga los cursos desde el servicio
+        coursesModel.clear();
+        List<Curso> cursos = cursosService.getListaDeCursos();
+        for (Curso c : cursos) {
+            coursesModel.addElement(c);
+        }
     }
-}      
+}     

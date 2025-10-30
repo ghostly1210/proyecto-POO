@@ -1,6 +1,7 @@
 package com.studentorganizer.gui;
 
 import com.studentorganizer.model.*;
+import com.studentorganizer.service.CursosService;
 import com.studentorganizer.service.EstudianteService;
 import com.studentorganizer.service.TareaService;
 import javax.swing.*;
@@ -16,6 +17,7 @@ public class MainFrame extends JFrame {
 	private Estudiante estudiante;
     private TareaService tareaService;
     private EstudianteService estudianteService;
+    private CursosService cursosService;
     
     // Componentes principales
     private JPanel leftPanel, centerPanel, rightPanel;
@@ -38,6 +40,10 @@ public class MainFrame extends JFrame {
         loadTasks();
     }
     
+    public MainFrame(Estudiante estudiante2, EstudianteService estudianteService2, CursosService cursosService2) {
+        //TODO Auto-generated constructor stub
+    }
+
     private void initializeComponents() {
         setTitle("StudyOrganizer - Dashboard de " + estudiante.getNombre());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -284,7 +290,7 @@ public class MainFrame extends JFrame {
     
     // Métodos de acción
     private void openAddTaskDialog() {
-        AddTaskDialog dialog = new AddTaskDialog(this, estudiante);
+        AddTaskDialog dialog = new AddTaskDialog(this, estudiante, cursosService);
         dialog.setVisible(true);
         if (dialog.isTaskCreated()) {
             loadTasks();
@@ -299,7 +305,7 @@ public class MainFrame extends JFrame {
     }
     
     private void openCoursesDialog() {
-        CoursesDialog dialog = new CoursesDialog(this);
+        CoursesDialog dialog = new CoursesDialog(this, cursosService);
         dialog.setVisible(true);
     }
     

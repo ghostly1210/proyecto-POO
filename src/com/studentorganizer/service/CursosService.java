@@ -36,7 +36,7 @@ public class CursosService {
         return listaDeCursos;
     }
 
-    public void agregarCurso(String nombre, String descripcion, Color color) {
+    public void agregarCurso(String nombre, String descripcion) {
         Curso nuevoCurso = new Curso(nombre, descripcion, new Color((int) (Math.random() * 0x1000000)));
         listaDeCursos.add(nuevoCurso);
         saveCursos();

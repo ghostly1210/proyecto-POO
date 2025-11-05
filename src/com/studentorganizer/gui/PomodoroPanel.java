@@ -1,7 +1,6 @@
 package com.studentorganizer.gui;
 
-// Asegúrate de tener todas estas importaciones
-import com.studentorganizer.model.*; // Si usas PomodoroSettingsDialog desde aquí
+import com.studentorganizer.model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -40,7 +39,7 @@ public class PomodoroPanel extends JPanel {
         
         timerLabel = new JLabel("25:00", SwingConstants.CENTER);
         timerLabel.setFont(new Font("Arial", Font.BOLD, 48));
-        timerLabel.setForeground(new Color(220, 53, 69)); // Color para "trabajo"
+        timerLabel.setForeground(new Color(220, 53, 69));
         
         statusLabel = new JLabel("Listo para estudiar", SwingConstants.CENTER);
         statusLabel.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -67,7 +66,6 @@ public class PomodoroPanel extends JPanel {
         
         pauseButton.setEnabled(false);
         
-        // El Timer se dispara cada 1000ms (1 segundo)
         timer = new Timer(1000, e -> updateTimer());
     }
     
@@ -79,7 +77,6 @@ public class PomodoroPanel extends JPanel {
         
         JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 5, 5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        buttonPanel.setOpaque(false); // Hacer el fondo del panel de botones transparente
         buttonPanel.add(startButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(resetButton);
@@ -88,7 +85,6 @@ public class PomodoroPanel extends JPanel {
         JPanel statsPanel = new JPanel();
         statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
         statsPanel.setBorder(BorderFactory.createTitledBorder("Estadísticas"));
-        statsPanel.setOpaque(false); // Hacer el fondo del panel de stats transparente
         
         JLabel sessionsLabel = new JLabel("Sesiones completadas: 0");
         sessionsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -144,52 +140,44 @@ public class PomodoroPanel extends JPanel {
         statusLabel.setForeground(new Color(108, 117, 125));
     }
     
-    /**
-     * Este es el método "combinado" con la lógica automática 25/5.
-     */
     private void updateTimer() {
         timeRemaining--;
         updateTimerDisplay();
         
         if (timeRemaining <= 0) {
-            timer.stop(); // Detiene el timer actual
-            playNotification(); // Suena la notificación
-
-            if (!isBreak) { 
-                // --- SE ACABÓ EL TIEMPO DE TRABAJO ---
+            timer.stop();
+            playNotification();
+            
+            if (!isBreak) {
+            	// Tiempo de trabajo terminado
                 sessionCount++;
-                
-                // Revisa si es un descanso largo o corto
+                // Después del trabajo, iniciar descanso
                 if (sessionCount % 4 == 0) {
                     timeRemaining = longBreak * 60;
-                    JOptionPane.showMessageDialog(this, 
-                        "¡Sesión de trabajo terminada! Comienza un descanso largo (" + longBreak + " min).", 
-                        "Pomodoro", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this,  
+                    		"¡Sesión de trabajo terminada! Comienza un descanso largo (" + longBreak + " min).",
+                    		"Pomodoro", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     timeRemaining = shortBreak * 60;
                     JOptionPane.showMessageDialog(this, 
-                        "¡Sesión de trabajo terminada! Comienza un descanso corto (" + shortBreak + " min).", 
-                        "Pomodoro", JOptionPane.INFORMATION_MESSAGE);
+                    		"¡Sesión de trabajo terminada! Comienza un descanso corto (" + shortBreak + " min).",
+                    		"Pomodoro", JOptionPane.INFORMATION_MESSAGE);
                 }
-                
-                isBreak = true; // Marca que ahora estamos en un descanso
+                isBreak = true; //Indica que el tiempo de descanso esta activo
                 updateTimerDisplay(); // Actualiza el número en el reloj
-                startTimer(); // ¡Inicia el timer de descanso automáticamente!
-
-            } else { 
-                // --- SE ACABÓ EL TIEMPO DE DESCANSO ---
+                startTimer();// Inicia automaticamente el timer
+            } else {
+            	// Tiempo de descanso terminado
                 timeRemaining = workTime * 60; // Resetea al tiempo de trabajo
-                isBreak = false; // Marca que volvemos al trabajo
+                isBreak = false; // Indica que el usuario esta devualta en el tiempo de trabajo
+                JOptionPane.showMessageDialog(this,
+                		"¡Descanso terminado! Listo para la siguiente sesión de trabajo.",
+                		"Pomodoro", JOptionPane.INFORMATION_MESSAGE);
                 
-                JOptionPane.showMessageDialog(this, 
-                    "¡Descanso terminado! Listo para la siguiente sesión de trabajo.", 
-                    "Pomodoro", JOptionPane.INFORMATION_MESSAGE);
+                updateTimerDisplay();
                 
-                updateTimerDisplay(); // Actualiza el número en el reloj
-                
-                // Resetea los botones para que el usuario inicie la próxima sesión manualmente
                 startButton.setEnabled(true);
-                pauseButton.setEnabled(false);
+                pauseButton.setEnabled(true);
                 isRunning = false;
             }
         }
@@ -200,17 +188,14 @@ public class PomodoroPanel extends JPanel {
         int seconds = timeRemaining % 60;
         
         timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
-        // Cambia el color del reloj si es descanso o trabajo
         timerLabel.setForeground(isBreak ? new Color(40, 167, 69) : new Color(220, 53, 69));
     }
     
     private void playNotification() {
-        // Genera un sonido simple de "beep"
         Toolkit.getDefaultToolkit().beep();
     }
     
     private void openSettings() {
-        // Asume que tienes una clase PomodoroSettingsDialog en el mismo paquete
         PomodoroSettingsDialog dialog = new PomodoroSettingsDialog(
             (JFrame) SwingUtilities.getWindowAncestor(this), 
             workTime, shortBreak, longBreak);
@@ -220,7 +205,7 @@ public class PomodoroPanel extends JPanel {
             workTime = dialog.getWorkTime();
             shortBreak = dialog.getShortBreak();
             longBreak = dialog.getLongBreak();
-            resetTimer(); // Aplica la nueva configuración reseteando el timer
+            resetTimer();
         }
     }
 }

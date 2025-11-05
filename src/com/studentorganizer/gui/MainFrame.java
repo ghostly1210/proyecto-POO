@@ -28,22 +28,54 @@ public class MainFrame extends JFrame {
     // Timer Pomodoro
     private PomodoroPanel pomodoroPanel;
     
-    public MainFrame(Estudiante estudiante, EstudianteService estudianteService) {
-        this.estudiante = estudiante;
-        this.tareaService = new TareaService(estudiante);
-        this.estudianteService = estudianteService;
-        
-        initializeComponents();
-        setupUI();
-        setupEventListeners();
-        updateTaskCounts();
-        loadTasks();
-    }
-    
-    public MainFrame(Estudiante estudiante2, EstudianteService estudianteService2, CursosService cursosService2) {
-        //TODO Auto-generated constructor stub
-    }
+ // En MainFrame.java
+ // REEMPLAZA tu constructor actual con este:
 
+ public MainFrame(Estudiante estudiante, EstudianteService estudianteService, CursosService cursosService) {
+     
+     // --- INICIO DEL CÓDIGO DE DEPURACIÓN ---
+     // Envolvemos todo el constructor en un try...catch
+     try {
+         System.out.println("--- MainFrame: Constructor Iniciado (Paso 1) ---");
+
+         this.estudiante = estudiante;
+         this.tareaService = new TareaService(estudiante);
+         this.estudianteService = estudianteService;
+         this.cursosService = cursosService;
+         
+         initializeComponents();
+         System.out.println("--- MainFrame: Componentes Inicializados (Paso 2) ---");
+         
+         setupUI();
+         System.out.println("--- MainFrame: UI Configurada (Paso 3) ---");
+         
+         setupEventListeners();
+         System.out.println("--- MainFrame: Listeners Creados (Paso 4) ---");
+         
+         updateTaskCounts();
+         System.out.println("--- MainFrame: Conteos Actualizados (Paso 5) ---");
+         
+         loadTasks();
+         System.out.println("--- MainFrame: Tareas Cargadas. CONSTRUCTOR EXITOSO ---");
+
+     } catch (Throwable t) {
+         // Si algo falla en cualquiera de los pasos de arriba...
+         
+         System.out.println("--- ¡ERROR FATAL DENTRO DEL CONSTRUCTOR DE MAINFRAME! ---");
+         t.printStackTrace(); // <-- ¡ESTO IMPRIMIRÁ EL ERROR REAL EN LA CONSOLA DE ECLIPSE!
+         System.out.println("-------------------------------------------------------");
+         
+         // Y mostramos un pop-up para estar 100% seguros
+         JOptionPane.showMessageDialog(
+             null, 
+             "Error fatal al crear la ventana principal:\n" + t.getMessage() + "\n\nRevisa la Consola de Eclipse para más detalles.", 
+             "Error de Constructor", 
+             JOptionPane.ERROR_MESSAGE
+         );
+     }
+     // --- FIN DEL CÓDIGO DE DEPURACIÓN ---
+ }
+    
     private void initializeComponents() {
         setTitle("StudyOrganizer - Dashboard de " + estudiante.getNombre());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
